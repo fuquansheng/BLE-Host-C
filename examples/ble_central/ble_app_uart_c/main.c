@@ -195,13 +195,33 @@ static void ble_nus_c_evt_handler(ble_nus_c_t * p_ble_nus_c, const ble_nus_c_evt
             break;
         
         case BLE_NUS_C_EVT_NUS_RX_EVT:
-					
-
-            for (uint32_t i = 2; i < p_ble_nus_evt->data_len; )
-            {
-                printf("%d\r\n",(p_ble_nus_evt->p_data[i]<<16) | (p_ble_nus_evt->p_data[i+1]<<8) | p_ble_nus_evt->p_data[i+2]);
-							  i = i+3;
-            }
+						// 心率+ads1292使用改代码
+						if(p_ble_nus_evt->data_len == 20)
+						{
+								printf("H%02x\r\n",p_ble_nus_evt->p_data[18]);
+								printf("S%02x\r\n",p_ble_nus_evt->p_data[19]);
+								for (uint32_t i = 0; i < p_ble_nus_evt->data_len - 2;)
+								{
+										printf("GL%06x\r\n",(p_ble_nus_evt->p_data[i]<<16) | (p_ble_nus_evt->p_data[i+1]<<8) | p_ble_nus_evt->p_data[i+2]);
+										printf("GR%06x\r\n",(p_ble_nus_evt->p_data[i+3]<<16) | (p_ble_nus_evt->p_data[i+4]<<8) | p_ble_nus_evt->p_data[i+5]);
+										i += 6;
+								}
+						}
+						if(p_ble_nus_evt->data_len == 18 | p_ble_nus_evt->data_len == 12)
+						{
+							for (uint32_t i = 0; i < p_ble_nus_evt->data_len;)
+							{
+										printf("GL%06x\r\n",(p_ble_nus_evt->p_data[i]<<16) | (p_ble_nus_evt->p_data[i+1]<<8) | p_ble_nus_evt->p_data[i+2]);
+										printf("GR%06x\r\n",(p_ble_nus_evt->p_data[i+3]<<16) | (p_ble_nus_evt->p_data[i+4]<<8) | p_ble_nus_evt->p_data[i+5]);
+										i += 6;
+							}
+						}					
+						// ads1291使用该代码
+//            for (uint32_t i = 2; i < p_ble_nus_evt->data_len; )
+//            {
+//                printf("%d\r\n",(p_ble_nus_evt->p_data[i]<<16) | (p_ble_nus_evt->p_data[i+1]<<8) | p_ble_nus_evt->p_data[i+2]);
+//							  i = i+3;
+//            }
             break;
         
         case BLE_NUS_C_EVT_DISCONNECTED:
