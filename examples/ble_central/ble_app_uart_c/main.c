@@ -207,7 +207,7 @@ static void ble_nus_c_evt_handler(ble_nus_c_t * p_ble_nus_c, const ble_nus_c_evt
 										i += 6;
 								}
 						}
-						if(p_ble_nus_evt->data_len == 18 | p_ble_nus_evt->data_len == 12)
+						if(p_ble_nus_evt->data_len == 18 || p_ble_nus_evt->data_len == 12)
 						{
 							for (uint32_t i = 0; i < p_ble_nus_evt->data_len;)
 							{
