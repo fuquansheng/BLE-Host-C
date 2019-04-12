@@ -195,7 +195,7 @@ static void ble_nus_c_evt_handler(ble_nus_c_t * p_ble_nus_c, const ble_nus_c_evt
             break;
         
         case BLE_NUS_C_EVT_NUS_RX_EVT:
-					  printf("len:%d",p_ble_nus_evt->data_len);
+					  printf("len:%d\r\n",p_ble_nus_evt->data_len);
 						// 心率+ads1292使用改代码
 						if(p_ble_nus_evt->data_len == 20)
 						{
